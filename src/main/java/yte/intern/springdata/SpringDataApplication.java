@@ -26,17 +26,22 @@ public class SpringDataApplication {
 
 		bookRepository.saveAll(books);
 
+		Book book = bookRepository.findByTitle("Introduction to Algorithms");
+		System.out.println("Found by title: " + book);
+		List<Book> algo = bookRepository.findByTitleLike("algo");
+
 		List<Book> javaBooks = bookRepository.findByTitleContainingIgnoreCase("Java");
 		List<Book> oldBooks = bookRepository.findByAgeGreaterThanEqual(15L, Sort.by("age").ascending());
 		List<Book> newBooks = bookRepository.findByPublishDateAfter(
 				LocalDate.of(2018, 1, 1),
 				PageRequest.of(0, 5)
 		);
-		Long count = bookRepository.countAllByAuthor("Robert C. Martin");
+		Long count = bookRepository.countByAuthor("Robert C. Martin");
 		Boolean algorithmBookExists = bookRepository.existsByTitle("Introduction to Algorithms");
 
 		System.out.println("Robert C. Martin Count: " + count);
 		System.out.println("Algorithm Book Exists: " + algorithmBookExists);
+		System.out.println("Books like algo: " + algo);
 
 		System.out.println("Java Books: " + javaBooks);
 		System.out.println("Old Books: " + oldBooks);
