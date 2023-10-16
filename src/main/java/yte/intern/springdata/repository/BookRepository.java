@@ -1,5 +1,6 @@
 package yte.intern.springdata.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,5 +39,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b FROM Book b WHERE b.author = :author AND b.age >= :age")
     List<Book> findByAuthorAndAge(String author, Long age);
+
+    @Transactional
+    @Query("DELETE FROM Book b WHERE b.author = :author")
+    Book deleteBookByAuthor(String author);
 
 }
